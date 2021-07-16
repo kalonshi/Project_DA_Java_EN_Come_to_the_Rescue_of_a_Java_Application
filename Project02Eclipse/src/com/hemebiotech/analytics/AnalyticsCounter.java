@@ -1,43 +1,59 @@
 package com.hemebiotech.analytics;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0;
-	private static int rashCount = 0;
-	private static int pupilCount = 0;
+
 	
 	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
+		AnalyticsCounter analyticsCounter = new AnalyticsCounter();
+		List<String> symptoms = analyticsCounter.getListSymptoms();
+		TreeMap<String, Integer> nbOccurenceBySymptoms = analyticsCounter.setNbOccurenceBySymptom(symptoms);
+		analyticsCounter.editResults(nbOccurenceBySymptoms);
 
-		int i = 0;
-
-		while (line != null) {
-			i++;
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headacheCount++;
-				System.out.println("number of headaches: " + headacheCount);
+	}
+	public TreeMap<String, Integer> setNbOccurenceBySymptom(List<String> listSymptoms) {
+		TreeMap<String, Integer> resultat = new TreeMap<>();
+		if (!listSymptoms.isEmpty()) {
+			for (String symptom : listSymptoms) {
+				if (resultat.containsKey(symptom)) {
+					int counter;
+					counter = resultat.get(symptom).intValue() + 1;
+					resultat.put(symptom, counter);
+				} else {
+					resultat.put(symptom, 1);
+				}
 			}
-			else if (line.equals("rash")) {
-				rashCount++;
-			}
-			else if (line.contains("pupils")) {
-				pupilCount++;
-			}
-
-			line = reader.readLine();	// get another symptom
+			return resultat;
 		}
-reader.close();
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headacheCount+ "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		writer.close();
+		return resultat;
+	}
+	public List<String> getListSymptoms() {
+		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
+		List<String> rawLlistOfSymptoms = readSymptomDataFromFile.getSymptoms();
+		return rawLlistOfSymptoms;
+	}
+	public void editResults(TreeMap<String, Integer> nbOccurenceBySymptoms) {
+		FileWriter writer;
+		try {
+			writer = new FileWriter("result.out");
+
+
+			for (Map.Entry<String, Integer> entry : (nbOccurenceBySymptoms).entrySet()) {
+				String key = entry.getKey();
+				Integer value = entry.getValue();
+
+				writer.write("number of " + key + ": " + value + "\n"); 	}
+			writer.close();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
 	}
 }
