@@ -21,27 +21,31 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	public ReadSymptomDataFromFile (String filepath) {
 		this.filepath = filepath;
 	}
-	
+
 	@Override
-	public List<String> GetSymptoms() {
-		ArrayList<String> result = new ArrayList<String>();
-		
-		if (filepath != null) {
+	public List<String> getSymptoms() {
+		ArrayList<String> listOfSymptomsUploaded = new ArrayList();
+
+		if (filepath != null) {  // check if the path is not empty
 			try {
-				BufferedReader reader = new BufferedReader (new FileReader(filepath));
+				BufferedReader reader = new BufferedReader(new FileReader(filepath));
 				String line = reader.readLine();
-				
 				while (line != null) {
-					result.add(line);
+					if (!line.isEmpty())
+						listOfSymptomsUploaded.add(line);
 					line = reader.readLine();
 				}
+
 				reader.close();
+
+				return listOfSymptomsUploaded;
 			} catch (IOException e) {
 				e.printStackTrace();
+
 			}
 		}
-		
-		return result;
+
+		return listOfSymptomsUploaded;
 	}
 
 }
