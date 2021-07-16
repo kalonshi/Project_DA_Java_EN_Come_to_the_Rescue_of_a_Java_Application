@@ -31,8 +31,8 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				BufferedReader reader = new BufferedReader(new FileReader(filepath));
 				String line = reader.readLine();
 				while (line != null) {
-					if (!line.isEmpty())
-						listOfSymptomsUploaded.add(line);
+					if (!line.isEmpty())  // check if the line is not empty
+						listOfSymptomsUploaded.add(line);  // add a symptom to the list listOfSymptomsUploaded
 					line = reader.readLine();
 				}
 
