@@ -8,8 +8,8 @@ import java.util.TreeMap;
 
 public class AnalyticsCounter {
 
-	
-	public static void main(String args[]) throws Exception {
+
+	public static void main(String args[]) {
 		AnalyticsCounter analyticsCounter = new AnalyticsCounter();
 		List<String> symptoms = analyticsCounter.getListSymptoms();
 		TreeMap<String, Integer> nbOccurenceBySymptoms = analyticsCounter.setNbOccurenceBySymptom(symptoms);
@@ -49,7 +49,7 @@ public class AnalyticsCounter {
 	 * @See ReadSymptomDataFromFile
 	 */
 	public List<String> getListSymptoms() {
-		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
+		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile("testde.txt");
 		return readSymptomDataFromFile.getSymptoms();
 	}
 	/**
