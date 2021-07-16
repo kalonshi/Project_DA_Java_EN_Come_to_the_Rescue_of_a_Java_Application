@@ -50,8 +50,7 @@ public class AnalyticsCounter {
 	 */
 	public List<String> getListSymptoms() {
 		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
-		List<String> rawLlistOfSymptoms = readSymptomDataFromFile.getSymptoms();
-		return rawLlistOfSymptoms;
+		return readSymptomDataFromFile.getSymptoms();
 	}
 	/**
 	 * generate output of a sort listing of symptoms , a TreeMap <String,Integer>
