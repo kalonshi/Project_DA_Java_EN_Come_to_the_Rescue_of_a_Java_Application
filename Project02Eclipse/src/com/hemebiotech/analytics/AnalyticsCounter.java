@@ -30,7 +30,7 @@ public class AnalyticsCounter {
 			for (String symptom : listSymptoms) {
 				if (resultat.containsKey(symptom)) {
 					int counter;
-					counter = resultat.get(symptom).intValue() + 1;
+					counter = resultat.get(symptom) + 1;
 					resultat.put(symptom, counter);
 				} else {
 					resultat.put(symptom, 1);
